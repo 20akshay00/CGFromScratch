@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <bits/stdc++.h>
 #include <SDL2/SDL.h>
 #include <iostream>
 
@@ -8,9 +8,9 @@
 void PutPixel(uint32_t *texture_buffer, int x, int y, int r, int g, int b)
 {
     int Sx = WINDOW_WIDTH / 2 + x;
-    int Sy = WINDOW_HEIGHT / 2 - y;
+    int Sy = WINDOW_HEIGHT / 2 - y - 1;
 
-    texture_buffer[(Sy * WINDOW_WIDTH) + Sx] = 0xFF000000 | (r << 16) | (b << 8) | g;
+    texture_buffer[(Sy * WINDOW_WIDTH) + Sx] = 0xFF000000 | (std::clamp(r, 0, 255) << 16) | (std::clamp(b, 0, 255) << 8) | std::clamp(g, 0, 255);
 }
 
 void DrawToCanvas(uint32_t *canvas_buffer)
@@ -19,7 +19,7 @@ void DrawToCanvas(uint32_t *canvas_buffer)
     {
         for (int j = -WINDOW_HEIGHT / 2; j < WINDOW_HEIGHT / 2; ++j)
         {
-            PutPixel(canvas_buffer, i, j, (255 * (i + WINDOW_WIDTH / 2)) / WINDOW_WIDTH, (255 * (j + WINDOW_HEIGHT / 2)) / WINDOW_HEIGHT, 0);
+            PutPixel(canvas_buffer, i, j, 2 * (255 * i) / WINDOW_WIDTH, 2 * (255 * j) / WINDOW_HEIGHT, 0);
         }
     }
 }
@@ -55,7 +55,6 @@ int main(void)
             break;
     }
 
-    SDL_DestroyTexture(canvas_texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
