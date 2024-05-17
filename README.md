@@ -1,0 +1,3 @@
+# CGFromScratch
+
+An ongoing project to build a simple raytracer and rasterizer by following the concepts presented in [Computer Graphics from Scratch](https://www.gabrielgambetta.com/computer-graphics-from-scratch/). This is done in an attempt to relearn C++ (using [learncpp](https://www.learncpp.com/)) and enter the field of graphics programming. Basic window creation and pixel drawing is handled by [SDL](https://www.libsdl.org/), with eventual plans to graduate to [OpenGL](https://learnopengl.com/).
