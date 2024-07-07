@@ -1,2 +1,2 @@
-g++ -std=c++17 -Wextra -pedantic-errors -o main.out main.cpp -lSDL2
+g++ -std=c++17 -Wextra -pedantic-errors -o main.out ./src/main.cpp ./src/canvas.cpp -lSDL2
 ./main.out
