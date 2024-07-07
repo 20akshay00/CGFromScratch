@@ -35,17 +35,32 @@ void Canvas::SetBackground(Color color)
 
 void Canvas::DrawLine(Point p1, Point p2, Color color)
 {
-    if (p1.x > p2.x) // enforce convention P1 lies to the left of P2
+    if (abs(p2.x - p1.x) > abs(p2.y - p1.y))
     {
-        std::swap(p1, p2);
+        if (p1.x > p2.x) // enforce convention P1 lies to the left of P2
+        {
+            std::swap(p1, p2);
+        }
+
+        std::vector<int> ys = DiscreteInterpolation(p1.x, p1.y, p2.x, p2.y);
+
+        for (int x = p1.x; x <= p2.x; ++x)
+        {
+            PutPixel(Point(x, ys[x - p1.x]), color);
+        }
     }
-
-    float m = (float)(p2.y - p1.y) / (p2.x - p1.x); // slope
-    float y = p1.y;                                 // first point
-
-    for (int x = p1.x; x <= p2.x; ++x)
+    else
     {
-        PutPixel(Point(x, (int)y), color);
-        y += m; // increment height by slope == change in y per unit change in x
+        if (p1.y > p2.y) // enforce convention P1 lies to the left of P2
+        {
+            std::swap(p1, p2);
+        }
+
+        std::vector<int> xs = DiscreteInterpolation(p1.y, p1.x, p2.y, p2.x);
+
+        for (int y = p1.y; y <= p2.y; ++y)
+        {
+            PutPixel(Point(xs[y - p1.y], y), color);
+        }
     }
 }

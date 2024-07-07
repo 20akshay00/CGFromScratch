@@ -1,5 +1,3 @@
-#include <bits/stdc++.h>
-#include <SDL2/SDL.h>
 #include <iostream>
 #include "canvas.h"
 
@@ -10,6 +8,7 @@ void Draw(Canvas canvas)
 {
     canvas.SetBackground(Color(0, 0, 0));
     canvas.DrawLine(Point(-50, -200), Point(60, 240), Color(255, 255, 255));
+    canvas.DrawLine(Point(-200, -100), Point(240, 120), Color(255, 255, 255));
 }
 
 int main(void)

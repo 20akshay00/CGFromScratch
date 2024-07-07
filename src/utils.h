@@ -1,3 +1,4 @@
+#include <vector>
 
 struct Color
 {
@@ -15,3 +16,5 @@ struct Point
 
     Point(int x, int y) : x(x), y(y) {}
 };
+
+std::vector<int> DiscreteInterpolation(int, int, int, int);
