@@ -64,3 +64,60 @@ void Canvas::DrawLine(Point p1, Point p2, Color color)
         }
     }
 }
+
+void Canvas::DrawWireframeTriangle(Point p0, Point p1, Point p2, Color color)
+{
+    DrawLine(p0, p1, color);
+    DrawLine(p1, p2, color);
+    DrawLine(p2, p0, color);
+}
+
+void Canvas::DrawFilledTriangle(Point p0, Point p1, Point p2, Color color)
+{
+    // re-arrange points such that p0 < p1 < p2 wrt vertical position
+    if (p1.y < p0.y)
+    {
+        std::swap(p0, p1);
+    }
+    if (p2.y < p0.y)
+    {
+        std::swap(p0, p2);
+    }
+    if (p2.y < p1.y)
+    {
+        std::swap(p1, p2);
+    }
+
+    // compute x co-ordinate of the triangle edges
+    std::vector<int> x01 = DiscreteInterpolation(p0.y, p0.x, p1.y, p1.x);
+    std::vector<int> x12 = DiscreteInterpolation(p1.y, p1.x, p2.y, p2.x);
+    std::vector<int> x02 = DiscreteInterpolation(p0.y, p0.x, p2.y, p2.x);
+
+    // concatenate short edges
+    x01.pop_back();
+    x01.insert(x01.end(), x12.begin(), x12.end());
+
+    // determine left and right segments and draw horizontal lines
+    int m = x01.size() / 2;
+
+    if (x02[m] < x01[m])
+    {
+        for (int y = p0.y; y <= p2.y; ++y)
+        {
+            for (int x = x02[y - p0.y]; x <= x01[y - p0.y]; ++x)
+            {
+                PutPixel(Point(x, y), color);
+            }
+        }
+    }
+    else
+    {
+        for (int y = p0.y; y <= p2.y; ++y)
+        {
+            for (int x = x01[y - p0.y]; x <= x02[y - p0.y]; ++x)
+            {
+                PutPixel(Point(x, y), color);
+            }
+        }
+    }
+}

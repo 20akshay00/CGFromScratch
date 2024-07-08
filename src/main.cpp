@@ -1,14 +1,16 @@
 #include <iostream>
 #include "canvas.h"
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 400
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 800
 
 void Draw(Canvas canvas)
 {
-    canvas.SetBackground(Color(0, 0, 0));
-    canvas.DrawLine(Point(-50, -200), Point(60, 240), Color(255, 255, 255));
-    canvas.DrawLine(Point(-200, -100), Point(240, 120), Color(255, 255, 255));
+    canvas.SetBackground(Color(101, 82, 77));
+    // canvas.DrawLine(Point(-50, -200), Point(60, 240), Color(255, 255, 255));
+    // canvas.DrawLine(Point(-200, -250), Point(200, 50), Color(255, 255, 255));
+    canvas.DrawWireframeTriangle(Point(-200, -250), Point(200, 50), Point(20, 250), Color(0, 0, 0));
+    canvas.DrawFilledTriangle(Point(-200, -250), Point(200, 50), Point(20, 250), Color(127, 194, 155));
 }
 
 int main(void)

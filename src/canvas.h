@@ -16,4 +16,6 @@ public:
     void PutPixel(Point, Color);
     void SetBackground(Color);
     void DrawLine(Point, Point, Color);
+    void DrawWireframeTriangle(Point, Point, Point, Color);
+    void DrawFilledTriangle(Point, Point, Point, Color);
 };
