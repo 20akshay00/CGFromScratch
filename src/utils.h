@@ -37,22 +37,17 @@ struct Point3D
     Point3D(float x = 0., float y = 0., float z = 0.) : x(x), y(y), z(z) {}
     friend Point3D operator+(const Point3D &p1, const Point3D &p2)
     {
-        Point3D res;
-        res.x = p1.x + p2.x;
-        res.y = p1.y + p2.y;
-        res.z = p1.z + p2.z;
-
-        return res;
+        return Point3D(p1.x + p2.x, p1.y + p2.y, p1.z + p2.z);
     }
 
     friend Point3D operator*(const float s, const Point3D &p)
     {
-        Point3D res;
-        res.x = s * p.x;
-        res.y = s * p.y;
-        res.z = s * p.z;
+        return Point3D(s * p.x, s * p.y, s * p.z);
+    }
 
-        return res;
+    friend Point3D operator-(const Point3D &p)
+    {
+        return -1 * p;
     }
 };
 
@@ -65,6 +60,7 @@ class Transform
 public:
     Transform(float scale, Point3D rotation, Point3D translation) : scale(scale), rotation(rotation), translation(translation) {}
     Point3D Apply(Point3D);
+    Point3D ApplyInverse(Point3D);
 };
 
 Point3D Scale(Point3D, float);

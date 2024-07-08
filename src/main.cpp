@@ -58,7 +58,7 @@ int main(void)
 
     // CREATE EMPTY SCENE
     Canvas canvas(WINDOW_WIDTH, WINDOW_HEIGHT, renderer);
-    Camera camera(2., 1., 1., canvas);
+    Camera camera(2., 1., 1., canvas, Transform(1., Point3D(0., 0., 0.), Point3D(0., 0., -1.)));
     Scene scene;
     scene.camera = &camera;
 

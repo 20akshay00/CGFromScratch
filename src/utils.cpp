@@ -21,6 +21,11 @@ Point3D Transform::Apply(Point3D v)
     return Translate(Rotate(Scale(v, scale), rotation), translation);
 }
 
+Point3D Transform::ApplyInverse(Point3D v)
+{
+    return Translate(Rotate(Scale(v, 1 / scale), -rotation), -translation);
+}
+
 std::vector<int> DiscreteInterpolation(int i1, int d1, int i2, int d2)
 {
     std::vector<int> ds(i2 - i1 + 1);

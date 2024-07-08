@@ -1,6 +1,15 @@
 #include "scene.h"
 #include <iostream>
 
+// Camera::Camera(float w, float h, float d, Canvas c)
+// {
+//     viewport_width = w;
+//     viewport_height = h;
+//     viewport_distance = d;
+//     canvas = c;
+//     transform = Transform(1., Point3D(0., 0., 0.), Point3D(0., 0., 0.));
+// }
+
 Point2D Camera::ViewportToCanvas(float x, float y)
 {
     return Point2D((int)(x * canvas.GetWidth() / viewport_width), (int)(y * canvas.GetHeight() / viewport_height));
@@ -26,7 +35,10 @@ void Camera::RenderInstance(MeshInstance instance)
 
     for (long unsigned int i = 0; i < projected_vertices.size(); ++i)
     {
-        projected_vertices[i] = ProjectVertexToCanvas(instance.transform.Apply(instance.mesh.vertices[i]));
+        projected_vertices[i] = ProjectVertexToCanvas(
+            transform.ApplyInverse(
+                instance.transform.Apply(
+                    instance.mesh.vertices[i])));
     }
 
     for (auto &triangle : instance.mesh.triangles)

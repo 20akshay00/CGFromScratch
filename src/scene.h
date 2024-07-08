@@ -8,10 +8,11 @@ class Camera
     float viewport_height;
     float viewport_distance;
     Canvas canvas;
+    Transform transform;
 
 public:
-    Camera(float w, float h, float d, Canvas c) : viewport_width(w), viewport_height(h), viewport_distance(d), canvas(c) {}
-    Point2D ViewportToCanvas(float x, float y);
+    Camera(float w, float h, float d, Canvas c, Transform t) : viewport_width(w), viewport_height(h), viewport_distance(d), canvas(c), transform(t) {}
+    Point2D ViewportToCanvas(float, float);
     Point2D ProjectVertexToCanvas(Point3D);
     void RenderTriangle(TriangleData, std::vector<Point2D>);
     void RenderInstance(MeshInstance);
