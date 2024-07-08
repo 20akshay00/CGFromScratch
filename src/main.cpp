@@ -9,8 +9,8 @@ void Draw(Canvas canvas)
     canvas.SetBackground(Color(101, 82, 77));
     // canvas.DrawLine(Point(-50, -200), Point(60, 240), Color(255, 255, 255));
     // canvas.DrawLine(Point(-200, -250), Point(200, 50), Color(255, 255, 255));
-    canvas.DrawWireframeTriangle(Point(-200, -250), Point(200, 50), Point(20, 250), Color(0, 0, 0));
     canvas.DrawFilledTriangle(Point(-200, -250), Point(200, 50), Point(20, 250), Color(127, 194, 155));
+    canvas.DrawShadedTriangle(Point(-200, -250), Point(200, 50), Point(20, 250), Color(127, 194, 155), 0.5, 0., 1.0);
 }
 
 int main(void)

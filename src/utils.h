@@ -18,3 +18,4 @@ struct Point
 };
 
 std::vector<int> DiscreteInterpolation(int, int, int, int);
+std::vector<float> Interpolation(int, float, int, float);

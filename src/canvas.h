@@ -18,4 +18,7 @@ public:
     void DrawLine(Point, Point, Color);
     void DrawWireframeTriangle(Point, Point, Point, Color);
     void DrawFilledTriangle(Point, Point, Point, Color);
+
+    void DrawShadedTriangle(Point, Point, Point, Color);
+    void DrawShadedTriangle(Point, Point, Point, Color, float, float, float);
 };

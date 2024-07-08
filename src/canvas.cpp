@@ -97,27 +97,90 @@ void Canvas::DrawFilledTriangle(Point p0, Point p1, Point p2, Color color)
     x01.pop_back();
     x01.insert(x01.end(), x12.begin(), x12.end());
 
-    // determine left and right segments and draw horizontal lines
+    // determine left and right segments
     int m = x01.size() / 2;
+
+    std::vector<int> xleft = x01;
+    std::vector<int> xright = x02;
 
     if (x02[m] < x01[m])
     {
-        for (int y = p0.y; y <= p2.y; ++y)
+        xleft = x02;
+        xright = x01;
+    }
+
+    // draw horizontal lines
+    for (int y = p0.y; y <= p2.y; ++y)
+    {
+        for (int x = xleft[y - p0.y]; x <= xright[y - p0.y]; ++x)
         {
-            for (int x = x02[y - p0.y]; x <= x01[y - p0.y]; ++x)
-            {
-                PutPixel(Point(x, y), color);
-            }
+            PutPixel(Point(x, y), color);
         }
     }
-    else
+}
+
+void Canvas::DrawShadedTriangle(Point p0, Point p1, Point p2, Color color, float h0 = 0., float h1 = 0.5, float h2 = 1.)
+{
+    // re-arrange points such that p0 < p1 < p2 wrt vertical position
+    if (p1.y < p0.y)
     {
-        for (int y = p0.y; y <= p2.y; ++y)
+        std::swap(p0, p1);
+    }
+    if (p2.y < p0.y)
+    {
+        std::swap(p0, p2);
+    }
+    if (p2.y < p1.y)
+    {
+        std::swap(p1, p2);
+    }
+
+    // compute x co-ordinate of the triangle edges
+    std::vector<int> x01 = DiscreteInterpolation(p0.y, p0.x, p1.y, p1.x);
+    std::vector<int> x12 = DiscreteInterpolation(p1.y, p1.x, p2.y, p2.x);
+    std::vector<int> x02 = DiscreteInterpolation(p0.y, p0.x, p2.y, p2.x);
+
+    std::vector<float> h01 = Interpolation(p0.y, h0, p1.y, h1);
+    std::vector<float> h12 = Interpolation(p1.y, h1, p2.y, h2);
+    std::vector<float> h02 = Interpolation(p0.y, h0, p2.y, h2);
+
+    // concatenate the short sides
+    x01.pop_back();
+    x01.insert(x01.end(), x12.begin(), x12.end());
+
+    h01.pop_back();
+    h01.insert(h01.end(), h12.begin(), h12.end());
+
+    // Determine which is left and which is right
+
+    std::vector<int> x_left = x01;
+    std::vector<float> h_left = h01;
+
+    std::vector<int> x_right = x02;
+    std::vector<float> h_right = h02;
+
+    int m = x01.size() / 2;
+    if (x02[m] < x01[m])
+    {
+        x_left = x02;
+        h_left = h02;
+
+        x_right = x01;
+        h_right = h01;
+    }
+
+    // draw the horizontal segments
+    for (int y = p0.y; y <= p2.y; ++y)
+    {
+        int x_l = x_left[y - p0.y];
+        int x_r = x_right[y - p0.y];
+
+        std::vector<float> h = Interpolation(x_l, h_left[y - p0.y], x_r, h_right[y - p0.y]);
+
+        for (int x = x_l; x <= x_r; ++x)
         {
-            for (int x = x01[y - p0.y]; x <= x02[y - p0.y]; ++x)
-            {
-                PutPixel(Point(x, y), color);
-            }
+            std::cout << h[x - x_l] << std ::endl;
+            PutPixel(Point(x, y), Color(color.r * h[x - x_l], color.g * h[x - x_l], color.b * h[x - x_l]));
         }
     }
 }
