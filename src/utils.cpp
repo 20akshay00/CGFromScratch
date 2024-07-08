@@ -1,6 +1,26 @@
 #include <bits/stdc++.h>
 #include "utils.h"
 
+Point3D Scale(Point3D point, float scale)
+{
+    return scale * point;
+}
+
+Point3D Rotate(Point3D point, Point3D rotation)
+{
+    return point;
+}
+
+Point3D Translate(Point3D point, Point3D translation)
+{
+    return point + translation;
+}
+
+Point3D Transform::Apply(Point3D v)
+{
+    return Translate(Rotate(Scale(v, scale), rotation), translation);
+}
+
 std::vector<int> DiscreteInterpolation(int i1, int d1, int i2, int d2)
 {
     std::vector<int> ds(i2 - i1 + 1);

@@ -44,7 +44,32 @@ struct Point3D
 
         return res;
     }
+
+    friend Point3D operator*(const float s, const Point3D &p)
+    {
+        Point3D res;
+        res.x = s * p.x;
+        res.y = s * p.y;
+        res.z = s * p.z;
+
+        return res;
+    }
 };
+
+class Transform
+{
+    float scale;
+    Point3D rotation;
+    Point3D translation;
+
+public:
+    Transform(float scale, Point3D rotation, Point3D translation) : scale(scale), rotation(rotation), translation(translation) {}
+    Point3D Apply(Point3D);
+};
+
+Point3D Scale(Point3D, float);
+Point3D Rotate(Point3D, Point3D);
+Point3D Translate(Point3D, Point3D);
 
 std::vector<int> DiscreteInterpolation(int, int, int, int);
 std::vector<float> Interpolation(int, float, int, float);

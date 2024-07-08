@@ -14,10 +14,14 @@ public:
     Point2D ViewportToCanvas(float x, float y);
     Point2D ProjectVertexToCanvas(Point3D);
     void RenderTriangle(TriangleData, std::vector<Point2D>);
-    void RenderMesh(Mesh);
+    void RenderInstance(MeshInstance);
 };
 
 class Scene
 {
-    std::vector<Mesh> objects;
+public:
+    Camera *camera;
+    std::vector<Mesh> meshes;
+    std::vector<MeshInstance> instances;
+    void Render(void);
 };

@@ -18,7 +18,7 @@ void Draw(Canvas canvas)
     canvas.DrawShadedTriangle(Point2D(-200, -250), Point2D(200, 50), Point2D(20, 250), Color(127, 194, 155), 0.5, 0., 1.0);
 }
 
-void RenderScene(Camera camera)
+void SetupScene(Scene &scene)
 {
     // color palette
     std::vector<Color> palette = {Color(247, 102, 95), Color(115, 214, 115), Color(167, 199, 231), Color(247, 242, 154), Color(145, 108, 207), Color(177, 247, 242)};
@@ -40,13 +40,10 @@ void RenderScene(Camera camera)
         {2, 6, 7, palette[5]},
         {2, 7, 3, palette[5]}};
 
-    // translation
-    for (auto &vertex : cube.vertices)
-    {
-        vertex = vertex + Point3D(-1.5, 0., 7.);
-    }
-
-    camera.RenderMesh(cube);
+    scene.meshes = {cube};
+    scene.instances = {
+        MeshInstance(cube, Transform(1., Point3D(0., 0., 0.), Point3D(-1.5, 0., 7.))),
+        MeshInstance(cube, Transform(0.5, Point3D(0., 0., 0.), Point3D(1.5, 0., 7.)))};
 }
 
 int main(void)
@@ -59,13 +56,15 @@ int main(void)
     SDL_Init(SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_HEIGHT, 0, &window, &renderer);
 
-    // CREATE EMPTY CANVAS
+    // CREATE EMPTY SCENE
     Canvas canvas(WINDOW_WIDTH, WINDOW_HEIGHT, renderer);
     Camera camera(2., 1., 1., canvas);
+    Scene scene;
+    scene.camera = &camera;
 
     // UPDATE TEXTURE DATA
-    // Draw(canvas);
-    RenderScene(camera);
+    SetupScene(scene);
+    scene.Render();
     canvas.UpdateTexture();
 
     // DRAW CANVAS TO WINDOW

@@ -16,3 +16,11 @@ public:
     std::vector<Point3D> vertices;
     std::vector<TriangleData> triangles;
 };
+
+class MeshInstance
+{
+public:
+    Mesh mesh;
+    Transform transform;
+    MeshInstance(Mesh &mesh, Transform transform) : mesh(mesh), transform(transform) {}
+};

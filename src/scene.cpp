@@ -20,19 +20,25 @@ void Camera::RenderTriangle(TriangleData triangle, std::vector<Point2D> projecte
         triangle.color);
 }
 
-void Camera::RenderMesh(Mesh m)
+void Camera::RenderInstance(MeshInstance instance)
 {
-    std::vector<Point2D> projected_vertices(m.vertices.size());
+    std::vector<Point2D> projected_vertices(instance.mesh.vertices.size());
 
     for (long unsigned int i = 0; i < projected_vertices.size(); ++i)
     {
-        projected_vertices[i] = ProjectVertexToCanvas(m.vertices[i]);
-
-        std::cout << projected_vertices[i].x << " " << projected_vertices[i].y << std::endl;
+        projected_vertices[i] = ProjectVertexToCanvas(instance.transform.Apply(instance.mesh.vertices[i]));
     }
 
-    for (auto &triangle : m.triangles)
+    for (auto &triangle : instance.mesh.triangles)
     {
         RenderTriangle(triangle, projected_vertices);
+    }
+}
+
+void Scene::Render()
+{
+    for (auto &instance : instances)
+    {
+        camera->RenderInstance(instance);
     }
 }
