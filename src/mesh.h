@@ -5,6 +5,7 @@
 class TriangleData
 {
 public:
+    TriangleData(int, int, int, Color);
     std::tuple<int, int, int> v; // vertex ids
     Color color;
 };

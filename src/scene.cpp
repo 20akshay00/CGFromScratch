@@ -1,4 +1,5 @@
 #include "scene.h"
+#include <iostream>
 
 Point2D Camera::ViewportToCanvas(float x, float y)
 {
@@ -26,6 +27,8 @@ void Camera::RenderMesh(Mesh m)
     for (long unsigned int i = 0; i < projected_vertices.size(); ++i)
     {
         projected_vertices[i] = ProjectVertexToCanvas(m.vertices[i]);
+
+        std::cout << projected_vertices[i].x << " " << projected_vertices[i].y << std::endl;
     }
 
     for (auto &triangle : m.triangles)
