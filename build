@@ -1,2 +1,2 @@
-g++ -std=c++17 -Wextra -pedantic-errors -o main.out ./src/main.cpp ./src/canvas.cpp ./src/utils.cpp -lSDL2
+g++ -std=c++17 -Wextra -pedantic-errors -o main.out ./src/main.cpp ./src/canvas.cpp ./src/scene.cpp ./src/mesh.cpp ./src/utils.cpp -lSDL2
 ./main.out

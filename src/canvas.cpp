@@ -9,12 +9,22 @@ Canvas::Canvas(int w, int h, SDL_Renderer *renderer)
     texture_buffer = new uint32_t[width * height];
 }
 
+int Canvas::GetWidth()
+{
+    return width;
+}
+
+int Canvas::GetHeight()
+{
+    return height;
+}
+
 void Canvas::UpdateTexture()
 {
     SDL_UpdateTexture(texture, NULL, texture_buffer, width * sizeof(uint32_t));
 }
 
-void Canvas::PutPixel(Point p, Color color)
+void Canvas::PutPixel(Point2D p, Color color)
 {
     int Sx = width / 2 + p.x;
     int Sy = height / 2 - p.y - 1;
@@ -28,12 +38,12 @@ void Canvas::SetBackground(Color color)
     {
         for (int j = -height / 2; j < height / 2; ++j)
         {
-            PutPixel(Point(i, j), color);
+            PutPixel(Point2D(i, j), color);
         }
     }
 }
 
-void Canvas::DrawLine(Point p1, Point p2, Color color)
+void Canvas::DrawLine(Point2D p1, Point2D p2, Color color)
 {
     if (abs(p2.x - p1.x) > abs(p2.y - p1.y))
     {
@@ -46,7 +56,7 @@ void Canvas::DrawLine(Point p1, Point p2, Color color)
 
         for (int x = p1.x; x <= p2.x; ++x)
         {
-            PutPixel(Point(x, ys[x - p1.x]), color);
+            PutPixel(Point2D(x, ys[x - p1.x]), color);
         }
     }
     else
@@ -60,19 +70,19 @@ void Canvas::DrawLine(Point p1, Point p2, Color color)
 
         for (int y = p1.y; y <= p2.y; ++y)
         {
-            PutPixel(Point(xs[y - p1.y], y), color);
+            PutPixel(Point2D(xs[y - p1.y], y), color);
         }
     }
 }
 
-void Canvas::DrawWireframeTriangle(Point p0, Point p1, Point p2, Color color)
+void Canvas::DrawWireframeTriangle(Point2D p0, Point2D p1, Point2D p2, Color color)
 {
     DrawLine(p0, p1, color);
     DrawLine(p1, p2, color);
     DrawLine(p2, p0, color);
 }
 
-void Canvas::DrawFilledTriangle(Point p0, Point p1, Point p2, Color color)
+void Canvas::DrawFilledTriangle(Point2D p0, Point2D p1, Point2D p2, Color color)
 {
     // re-arrange points such that p0 < p1 < p2 wrt vertical position
     if (p1.y < p0.y)
@@ -114,12 +124,12 @@ void Canvas::DrawFilledTriangle(Point p0, Point p1, Point p2, Color color)
     {
         for (int x = xleft[y - p0.y]; x <= xright[y - p0.y]; ++x)
         {
-            PutPixel(Point(x, y), color);
+            PutPixel(Point2D(x, y), color);
         }
     }
 }
 
-void Canvas::DrawShadedTriangle(Point p0, Point p1, Point p2, Color color, float h0 = 0., float h1 = 0.5, float h2 = 1.)
+void Canvas::DrawShadedTriangle(Point2D p0, Point2D p1, Point2D p2, Color color, float h0 = 0., float h1 = 0.5, float h2 = 1.)
 {
     // re-arrange points such that p0 < p1 < p2 wrt vertical position
     if (p1.y < p0.y)
@@ -179,8 +189,7 @@ void Canvas::DrawShadedTriangle(Point p0, Point p1, Point p2, Color color, float
 
         for (int x = x_l; x <= x_r; ++x)
         {
-            std::cout << h[x - x_l] << std ::endl;
-            PutPixel(Point(x, y), Color(color.r * h[x - x_l], color.g * h[x - x_l], color.b * h[x - x_l]));
+            PutPixel(Point2D(x, y), Color(color.r * h[x - x_l], color.g * h[x - x_l], color.b * h[x - x_l]));
         }
     }
 }

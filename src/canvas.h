@@ -12,13 +12,16 @@ public:
     SDL_Texture *texture;
 
     Canvas(int, int, SDL_Renderer *);
-    void UpdateTexture(void);
-    void PutPixel(Point, Color);
-    void SetBackground(Color);
-    void DrawLine(Point, Point, Color);
-    void DrawWireframeTriangle(Point, Point, Point, Color);
-    void DrawFilledTriangle(Point, Point, Point, Color);
+    int GetWidth();
+    int GetHeight();
 
-    void DrawShadedTriangle(Point, Point, Point, Color);
-    void DrawShadedTriangle(Point, Point, Point, Color, float, float, float);
+    void UpdateTexture(void);
+    void PutPixel(Point2D, Color);
+    void SetBackground(Color);
+    void DrawLine(Point2D, Point2D, Color);
+    void DrawWireframeTriangle(Point2D, Point2D, Point2D, Color);
+    void DrawFilledTriangle(Point2D, Point2D, Point2D, Color);
+
+    void DrawShadedTriangle(Point2D, Point2D, Point2D, Color);
+    void DrawShadedTriangle(Point2D, Point2D, Point2D, Color, float, float, float);
 };

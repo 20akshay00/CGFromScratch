@@ -4,13 +4,18 @@
 #define WINDOW_WIDTH 1600
 #define WINDOW_HEIGHT 800
 
+// void Draw(Canvas canvas)
+// {
+//     canvas.SetBackground(Color(101, 82, 77));
+//     canvas.DrawFilledTriangle(Point2D(-200, -250), Point2D(200, 50), Point2D(20, 250), Color(127, 194, 155));
+//     canvas.DrawShadedTriangle(Point2D(-200, -250), Point2D(200, 50), Point2D(20, 250), Color(127, 194, 155), 0.5, 0., 1.0);
+// }
+
 void Draw(Canvas canvas)
 {
     canvas.SetBackground(Color(101, 82, 77));
-    // canvas.DrawLine(Point(-50, -200), Point(60, 240), Color(255, 255, 255));
-    // canvas.DrawLine(Point(-200, -250), Point(200, 50), Color(255, 255, 255));
-    canvas.DrawFilledTriangle(Point(-200, -250), Point(200, 50), Point(20, 250), Color(127, 194, 155));
-    canvas.DrawShadedTriangle(Point(-200, -250), Point(200, 50), Point(20, 250), Color(127, 194, 155), 0.5, 0., 1.0);
+    canvas.DrawFilledTriangle(Point2D(-200, -250), Point2D(200, 50), Point2D(20, 250), Color(127, 194, 155));
+    canvas.DrawShadedTriangle(Point2D(-200, -250), Point2D(200, 50), Point2D(20, 250), Color(127, 194, 155), 0.5, 0., 1.0);
 }
 
 int main(void)
